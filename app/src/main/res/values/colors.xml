@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#d43d3d</color>
+    <color name="colorPrimaryDark">#961b1b</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorToolbar">#d43d3d</color>
+    <color name="bottomNav">#D43D3D</color>
+    <color name="bottomNavNormal">#d9cdcd</color>
+    <color name="bottomNavBg">#f5f3f3</color>
+    <color name="imgNewsItem">#b9b8b8</color>
+    <color name="titleText">#000000</color>
+</resources>

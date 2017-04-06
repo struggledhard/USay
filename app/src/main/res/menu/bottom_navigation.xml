@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/tou_tiao"
+        android:icon="@drawable/ic_home_white_24dp"
+        android:title="@string/tou_tiao"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/fen_lei"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/fen_lei"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/she_qu"
+        android:icon="@drawable/ic_message_white_24dp"
+        android:title="@string/she_qu"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/ge_ren"
+        android:icon="@drawable/ic_person_white_24dp"
+        android:title="@string/ge_ren"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+</menu>
