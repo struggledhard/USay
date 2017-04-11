@@ -37,4 +37,5 @@
     <string name="person_info">个人资料</string>
     <string name="input_new_password">请输入新密码</string>
     <string name="input_old_password">请输入旧密码</string>
+    <string name="edit_shequ">编辑</string>
 </resources>
