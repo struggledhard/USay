@@ -1,8 +1,5 @@
 package com.skh.universitysay.utils;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -67,19 +64,5 @@ public class HttpUtils {
             e.printStackTrace();
         }
         return null;
-    }
-
-    /*
-     * 判断网络是否可用
-     */
-    public boolean isNetWorkAvailable(Context context) {
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (manager != null) {
-            NetworkInfo info = manager.getActiveNetworkInfo();
-            if (info != null && info.isConnected()) {
-                return true;
-            }
-        }
-        return false;
     }
 }
