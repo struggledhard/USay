@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="android-image-picker-v1.0.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/6648b7c00be9b7eca0abbaf4c5d75df7fceaf54c/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/6648b7c00be9b7eca0abbaf4c5d75df7fceaf54c/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.sd6352051/android-image-picker/v1.0.2/52acfb640b97172f8e0a195e923413fe65442e1e/android-image-picker-v1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

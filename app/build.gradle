@@ -46,5 +46,7 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     compile 'com.youth.banner:banner:1.4.9'
-    compile 'cn.bmob.android:bmob-sdk:3.5.0'
+    compile 'cn.bmob.android:bmob-sdk:3.5.3'
+    compile 'com.github.sd6352051:android-image-picker:v1.0.2'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

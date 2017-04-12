@@ -47,6 +47,7 @@ public class SheQuFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mMyUser = BmobUser.getCurrentUser(MyUser.class);
+        initToolbar();
         // 想让Fragment中的onCreateOptionsMenu生效必须先调用setHasOptionsMenu方法
         // 否则Toolbar没有菜单
         setHasOptionsMenu(true);

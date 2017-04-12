@@ -21,4 +21,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+    <style name="PhotoSelectTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">#2b2b2b</item>
+    </style>
 </resources>

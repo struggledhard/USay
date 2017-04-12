@@ -56,5 +56,15 @@
         <activity android:name=".ui.UpdatePasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Login_theme"/>
+
+        <activity android:name=".ui.CreatePostActivity"
+            android:screenOrientation="portrait"
+                  android:theme="@style/WebViewTheme"/>
+        <activity android:name=".ui.PhotosSelectActivity"
+            android:screenOrientation="portrait"
+                  android:theme="@style/PhotoSelectTheme"/>
+        <activity android:name=".ui.PostDetailActivity"
+                  android:theme="@style/WebViewTheme"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>
