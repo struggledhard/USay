@@ -4,40 +4,48 @@
               android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/post_image"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"/>
     <LinearLayout
         android:id="@+id/ll_right"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_toEndOf="@id/post_image"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/post_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:textColor="#607d8b"
             android:textSize="16sp"/>
         <TextView
             android:id="@+id/post_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <GridView
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:maxLines="10"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"/>
+        <com.skh.universitysay.other.NineGridView
             android:id="@+id/post_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numColumns="3"
+            android:numColumns="auto_fit"
+            android:columnWidth="90dp"
             android:horizontalSpacing="0dp"
             android:verticalSpacing="0dp"
-            android:listSelector="@null"
             android:stretchMode="columnWidth"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
             android:scrollbars="none">
-        </GridView>
+        </com.skh.universitysay.other.NineGridView>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,8 +69,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@id/post_like_num"
+                android:background="@null"
                 android:layout_centerVertical="true"
-                android:src="@drawable/select_post_like"/>
+                android:src="@drawable/select_post_like"
+                android:layout_marginEnd="4dp"/>
             <TextView
                 android:id="@+id/post_commit_num"
                 android:layout_width="wrap_content"
@@ -70,14 +80,17 @@
                 android:layout_centerVertical="true"
                 android:text="0"
                 android:textSize="12sp"
+                android:layout_marginEnd="16dp"
                 android:layout_toStartOf="@id/post_like"/>
             <ImageButton
                 android:id="@+id/post_commit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:layout_toStartOf="@id/post_commit_num"
                 android:src="@drawable/ic_insert_comment_gray_24dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="4dp"/>
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

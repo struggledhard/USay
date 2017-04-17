@@ -66,5 +66,8 @@
         <activity android:name=".ui.PostDetailActivity"
                   android:theme="@style/WebViewTheme"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.GridImgDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/PhotoSelectTheme"/>
     </application>
 </manifest>

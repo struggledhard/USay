@@ -50,7 +50,7 @@ public class TabIosFragment extends Fragment {
     private List<IosItemBean> mIosItemBeanList;
 
     private int page = 1;
-    boolean isLoadingMore = false;
+    private int lastVisibleItem;
 
     //是否可见
     protected boolean isVisble;
@@ -88,24 +88,25 @@ public class TabIosFragment extends Fragment {
         initIosRecycler();
         initIosRefresh();
         loadMoreIosData();
-//        onVisible();
-        autoRefresh();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        autoRefresh();
     }
 
     // 首次进入自动刷新
     private void autoRefresh() {
-        mTabIosRefresh.measure(0, 0);
-        mTabIosRefresh.setRefreshing(true);
         mTabIosRefresh.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mTabIosRefresh.isRefreshing()) {
-                    onVisible();
-                    mTabIosRefresh.setRefreshing(false);
-                }
+                mTabIosRefresh.setRefreshing(true);
+                onVisible();
+
             }
-        }, 3000);
+        }, 100);
     }
 
     private void initIosRecycler() {
@@ -130,12 +131,9 @@ public class TabIosFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                int lastVisibleItem = ((LinearLayoutManager) mTabIosRecycler.getLayoutManager())
-                        .findLastVisibleItemPosition();
                 int totalItemCount = mTabIosRecycler.getLayoutManager().getItemCount();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!isLoadingMore && lastVisibleItem >= (totalItemCount - 2)) {
-                        isLoadingMore = true;
+                    if (lastVisibleItem >= (totalItemCount - 1)) {
                         getMoreData();
                     }
                 }
@@ -144,16 +142,8 @@ public class TabIosFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager) mTabIosRecycler.getLayoutManager())
+                lastVisibleItem = ((LinearLayoutManager) mTabIosRecycler.getLayoutManager())
                         .findLastVisibleItemPosition();
-                int totalItemCount = mTabIosRecycler.getLayoutManager().getItemCount();
-                if (lastVisibleItem >= (totalItemCount - 2) && dy > 0) {
-                    //还剩2个Item时加载更多
-                    if (isLoadingMore) {
-                        isLoadingMore = false;
-                        getMoreData();
-                    }
-                }
             }
         });
     }

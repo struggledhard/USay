@@ -51,7 +51,7 @@ public class TabAndroidFragment extends Fragment {
     private List<AndroidItemBean> mAndroidItemBeanList;
 
     private int page = 1;
-    boolean isLoadingMore = false;
+    private int lastVisibleItem;
 
     @Nullable
     @Override
@@ -64,24 +64,35 @@ public class TabAndroidFragment extends Fragment {
         initAndroidRecycler();
         initAndroidRefresh();
         loadMoreAndroidData();
-//        getData();
-        autoRefresh();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        autoRefresh();
     }
 
     // 首次进入自动刷新
     private void autoRefresh() {
-        mTabAndroidRefresh.measure(0, 0);
-        mTabAndroidRefresh.setRefreshing(true);
+//        mTabAndroidRefresh.measure(0, 0);
+//        mTabAndroidRefresh.setRefreshing(true);
+//        mTabAndroidRefresh.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (mTabAndroidRefresh.isRefreshing()) {
+//                    getData();
+//                    mTabAndroidRefresh.setRefreshing(false);
+//                }
+//            }
+//        }, 3000);
         mTabAndroidRefresh.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mTabAndroidRefresh.isRefreshing()) {
-                    getData();
-                    mTabAndroidRefresh.setRefreshing(false);
-                }
+                mTabAndroidRefresh.setRefreshing(true);
+                getData();
             }
-        }, 3000);
+        }, 100);
     }
 
     private void initAndroidRecycler() {
@@ -106,12 +117,9 @@ public class TabAndroidFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                int lastVisibleItem = ((LinearLayoutManager) mTabAndroidRecycler.getLayoutManager())
-                        .findLastVisibleItemPosition();
                 int totalItemCount = mTabAndroidRecycler.getLayoutManager().getItemCount();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!isLoadingMore && lastVisibleItem >= (totalItemCount - 2)) {
-                        isLoadingMore = true;
+                    if (lastVisibleItem >= (totalItemCount - 1)) {
                         getMoreData();
                     }
                 }
@@ -120,16 +128,8 @@ public class TabAndroidFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager) mTabAndroidRecycler.getLayoutManager())
+                lastVisibleItem = ((LinearLayoutManager) mTabAndroidRecycler.getLayoutManager())
                         .findLastVisibleItemPosition();
-                int totalItemCount = mTabAndroidRecycler.getLayoutManager().getItemCount();
-                if (lastVisibleItem >= (totalItemCount - 2) && dy > 0) {
-                    //还剩2个Item时加载更多
-                    if (isLoadingMore) {
-                        isLoadingMore = false;
-                        getMoreData();
-                    }
-                }
             }
         });
     }

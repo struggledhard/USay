@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">大学说</string>
+    <string name="app_name">USay</string>
 
     <string name="tou_tiao">头条</string>
     <string name="fen_lei">分类</string>
@@ -48,4 +48,5 @@
     <string name="createpost_send">发表</string>
 
     <string name="action_settings">Settings</string>
+    <string name="viewpager_indicator">%1$d/%2$d</string>
 </resources>

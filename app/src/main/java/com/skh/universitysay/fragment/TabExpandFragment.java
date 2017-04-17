@@ -50,7 +50,7 @@ public class TabExpandFragment extends Fragment {
     private List<ExpandItemBean> mExpandItemBeanList;
 
     private int page = 1;
-    boolean isLoadingMore = false;
+    private int lastVisibleItem;
 
     //是否可见
     protected boolean isVisble;
@@ -81,24 +81,24 @@ public class TabExpandFragment extends Fragment {
         initExpandRecycler();
         initExpandRefresh();
         loadMoreExpandData();
-//        onVisible();
-        autoRefresh();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        autoRefresh();
     }
 
     // 首次进入自动刷新
     private void autoRefresh() {
-        mTabExpandRefresh.measure(0, 0);
-        mTabExpandRefresh.setRefreshing(true);
         mTabExpandRefresh.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mTabExpandRefresh.isRefreshing()) {
-                    onVisible();
-                    mTabExpandRefresh.setRefreshing(false);
-                }
+                mTabExpandRefresh.setRefreshing(true);
+                onVisible();
             }
-        }, 3000);
+        }, 100);
     }
 
     private void initExpandRecycler() {
@@ -123,12 +123,9 @@ public class TabExpandFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                int lastVisibleItem = ((LinearLayoutManager) mTabExpandRecycler.getLayoutManager())
-                        .findLastVisibleItemPosition();
                 int totalItemCount = mTabExpandRecycler.getLayoutManager().getItemCount();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!isLoadingMore && lastVisibleItem >= (totalItemCount - 2)) {
-                        isLoadingMore = true;
+                    if (lastVisibleItem >= (totalItemCount - 1)) {
                         getMoreData();
                     }
                 }
@@ -137,16 +134,8 @@ public class TabExpandFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager) mTabExpandRecycler.getLayoutManager())
+                lastVisibleItem = ((LinearLayoutManager) mTabExpandRecycler.getLayoutManager())
                         .findLastVisibleItemPosition();
-                int totalItemCount = mTabExpandRecycler.getLayoutManager().getItemCount();
-                if (lastVisibleItem >= (totalItemCount - 2) && dy > 0) {
-                    //还剩2个Item时加载更多
-                    if (isLoadingMore) {
-                        isLoadingMore = false;
-                        getMoreData();
-                    }
-                }
             }
         });
     }

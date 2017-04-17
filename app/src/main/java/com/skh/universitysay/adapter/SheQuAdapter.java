@@ -1,11 +1,13 @@
 package com.skh.universitysay.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.skh.universitysay.R;
 import com.skh.universitysay.bean.Post;
+import com.skh.universitysay.ui.GridImgDetailActivity;
 import com.skh.universitysay.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -54,8 +57,12 @@ public class SheQuAdapter extends RecyclerView.Adapter<SheQuAdapter.SheQuViewHol
             holder.mPostUser.setText("佚名");
         }
         if (post.getAuthor() != null) {
-            Glide.with(mContext).load(post.getAuthor().getHeadImgUrl())
-                    .centerCrop().override(56, 56).crossFade().into(holder.mPostImage);
+            if (post.getAuthor().getHeadImgUrl() != null) {
+                Glide.with(mContext).load(post.getAuthor().getHeadImgUrl())
+                        .centerCrop().override(132, 132).crossFade().into(holder.mPostImage);
+            } else {
+                holder.mPostImage.setImageResource(R.mipmap.user_logo_default);
+            }
         } else {
             holder.mPostImage.setImageResource(R.mipmap.user_logo_default);
         }
@@ -65,7 +72,8 @@ public class SheQuAdapter extends RecyclerView.Adapter<SheQuAdapter.SheQuViewHol
         } else {
             holder.mPostContent.setVisibility(View.GONE);
         }
-        if (!post.getImageUrlList().isEmpty()) {
+        final List<String> userImgsArrayList = post.getImageUrlList();
+        if (!userImgsArrayList.isEmpty()) {
             holder.mPostGrid.setVisibility(View.VISIBLE);
             holder.mPostGrid.setAdapter(new PostGridAdapter(post.getImageUrlList(), mContext));
         } else {
@@ -78,6 +86,13 @@ public class SheQuAdapter extends RecyclerView.Adapter<SheQuAdapter.SheQuViewHol
         holder.mPostDate.setText(strDate);
         holder.mPostLikeNum.setText(String.valueOf(post.getLikeNum()));
         holder.mPostCommitNum.setText(String.valueOf(post.getCommentNum()));
+
+        holder.mPostGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                imageBrower(i, userImgsArrayList);
+            }
+        });
     }
 
     @Override
@@ -126,5 +141,19 @@ public class SheQuAdapter extends RecyclerView.Adapter<SheQuAdapter.SheQuViewHol
     public void setPostMoreData(List<Post> postList) {
         mPostList.addAll(postList);
         notifyDataSetChanged();
+    }
+
+    /**
+     * 打开图片查看器
+     *
+     * @param position          图片在九宫格中的位置
+     * @param userImgsArrayList 图片列表
+     */
+    private void imageBrower(int position, List<String> userImgsArrayList) {
+        Intent intent = new Intent(mContext, GridImgDetailActivity.class);
+        intent.putStringArrayListExtra(GridImgDetailActivity.EXTRA_IMAGE_URLS,
+                (ArrayList<String>) userImgsArrayList);
+        intent.putExtra(GridImgDetailActivity.EXTRA_IMAGE_INDEX, position);
+        mContext.startActivity(intent);
     }
 }

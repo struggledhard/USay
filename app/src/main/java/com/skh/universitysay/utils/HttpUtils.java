@@ -19,7 +19,7 @@ public class HttpUtils {
 
     // 头条
     public String pageUrlContent(int page) {
-        String url = "http://192.168.2.74:8080/BlogSplider/BlogList?page=" + page;
+        String url = "http://172.16.103.241:8080/BlogSplider/BlogList?page=" + page;
 //        String url = "http://192.168.1.100:8080/BlogSplider/BlogList?page=" + page;
         Log.d("TAG", url);
         String result = runByHttp(url);

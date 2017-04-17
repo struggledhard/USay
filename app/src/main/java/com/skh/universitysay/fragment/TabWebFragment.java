@@ -50,7 +50,7 @@ public class TabWebFragment extends Fragment {
     private List<WebItemBean> mWebItemBeanList;
 
     private int page = 1;
-    boolean isLoadingMore = false;
+    private int lastVisibleItem;
 
     //是否可见
     protected boolean isVisble;
@@ -81,24 +81,25 @@ public class TabWebFragment extends Fragment {
         initWebRecycler();
         initWebRefresh();
         loadMoreWebData();
-//        onVisible();
-        autoRefresh();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        autoRefresh();
     }
 
     // 首次进入自动刷新
     private void autoRefresh() {
-        mTabWebRefresh.measure(0, 0);
-        mTabWebRefresh.setRefreshing(true);
         mTabWebRefresh.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mTabWebRefresh.isRefreshing()) {
-                    onVisible();
-                    mTabWebRefresh.setRefreshing(false);
-                }
+                mTabWebRefresh.setRefreshing(true);
+                onVisible();
+
             }
-        }, 3000);
+        }, 100);
     }
 
     private void initWebRecycler() {
@@ -123,12 +124,9 @@ public class TabWebFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                int lastVisibleItem = ((LinearLayoutManager) mTabWebRecycler.getLayoutManager())
-                        .findLastVisibleItemPosition();
                 int totalItemCount = mTabWebRecycler.getLayoutManager().getItemCount();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!isLoadingMore && lastVisibleItem >= (totalItemCount - 2)) {
-                        isLoadingMore = true;
+                    if (lastVisibleItem >= (totalItemCount - 1)) {
                         getMoreData();
                     }
                 }
@@ -137,16 +135,8 @@ public class TabWebFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager) mTabWebRecycler.getLayoutManager())
+                lastVisibleItem = ((LinearLayoutManager) mTabWebRecycler.getLayoutManager())
                         .findLastVisibleItemPosition();
-                int totalItemCount = mTabWebRecycler.getLayoutManager().getItemCount();
-                if (lastVisibleItem >= (totalItemCount - 2) && dy > 0) {
-                    //还剩2个Item时加载更多
-                    if (isLoadingMore) {
-                        isLoadingMore = false;
-                        getMoreData();
-                    }
-                }
             }
         });
     }

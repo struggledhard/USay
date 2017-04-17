@@ -64,7 +64,8 @@ public class TouTiaoFragment extends Fragment {
     private NewsItemsAdapter mNewsAdapter;
 
     private int page = 1;
-    boolean isLoadMore = false;
+//    boolean isLoadMore = false;
+    private int lastVisibleItem;
 
     @Nullable
     @Override
@@ -77,10 +78,8 @@ public class TouTiaoFragment extends Fragment {
         mNewsAdapter.notifyDataSetChanged();
 
         init();
-     //   pullData();
         initSwipeRefresh();
         initLoadMore();
-        autoRefresh();
 
         // 想让Fragment中的onCreateOptionsMenu生效必须先调用setHasOptionsMenu方法
         // 否则Toolbar没有菜单
@@ -88,19 +87,22 @@ public class TouTiaoFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        autoRefresh();
+    }
+
     // 首次进入自动刷新
     private void autoRefresh() {
-        touSwipeRefresh.measure(0, 0);
-        touSwipeRefresh.setRefreshing(true);
         touSwipeRefresh.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (touSwipeRefresh.isRefreshing()) {
-                    pullData();
-                    touSwipeRefresh.setRefreshing(false);
-                }
+                touSwipeRefresh.setRefreshing(true);
+                pullData();
+
             }
-        }, 3000);
+        }, 100);
     }
 
     private void init() {
@@ -174,12 +176,18 @@ public class TouTiaoFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                int lastVisibleItem = ((LinearLayoutManager) touRecyclerView.getLayoutManager())
-                        .findLastVisibleItemPosition();
+//                int lastVisibleItem = ((LinearLayoutManager) touRecyclerView.getLayoutManager())
+//                        .findLastVisibleItemPosition();
+//                int totalItemCount = touRecyclerView.getLayoutManager().getItemCount();
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    if (!isLoadMore && lastVisibleItem >= (totalItemCount - 2)) {
+//                        isLoadMore = true;
+//                        pullMoreData();
+//                    }
+//                }
                 int totalItemCount = touRecyclerView.getLayoutManager().getItemCount();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!isLoadMore && lastVisibleItem >= (totalItemCount - 2)) {
-                        isLoadMore = true;
+                    if (lastVisibleItem >= (totalItemCount - 1)) {
                         pullMoreData();
                     }
                 }
@@ -188,16 +196,18 @@ public class TouTiaoFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItem = ((LinearLayoutManager) touRecyclerView.getLayoutManager())
+//                int lastVisibleItem = ((LinearLayoutManager) touRecyclerView.getLayoutManager())
+//                        .findLastVisibleItemPosition();
+//                int totalItemCount = touRecyclerView.getLayoutManager().getItemCount();
+//                if (lastVisibleItem >= (totalItemCount - 2) && dy > 0) {
+//                    //还剩2个Item时加载更多
+//                    if (isLoadMore) {
+//                        isLoadMore = false;
+//                        pullMoreData();
+//                    }
+//                }
+                lastVisibleItem = ((LinearLayoutManager) touRecyclerView.getLayoutManager())
                         .findLastVisibleItemPosition();
-                int totalItemCount = touRecyclerView.getLayoutManager().getItemCount();
-                if (lastVisibleItem >= (totalItemCount - 2) && dy > 0) {
-                    //还剩2个Item时加载更多
-                    if (isLoadMore) {
-                        isLoadMore = false;
-                        pullMoreData();
-                    }
-                }
             }
         });
     }
