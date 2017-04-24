@@ -13,11 +13,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.skh.universitysay.R;
+import com.skh.universitysay.bean.MyUser;
 import com.skh.universitysay.bean.Post;
 import com.skh.universitysay.ui.GridImgDetailActivity;
+import com.skh.universitysay.ui.PostDetailActivity;
 import com.skh.universitysay.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -25,6 +28,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by SKH on 2017/4/12 0012.
@@ -35,10 +42,12 @@ public class SheQuAdapter extends RecyclerView.Adapter<SheQuAdapter.SheQuViewHol
 
     private List<Post> mPostList;
     private Context mContext;
+    private MyUser mMyUser;
 
     public SheQuAdapter(Context context) {
         this.mContext = context;
         mPostList = new ArrayList<>();
+        mMyUser = BmobUser.getCurrentUser(MyUser.class);
     }
 
     @Override
@@ -48,8 +57,8 @@ public class SheQuAdapter extends RecyclerView.Adapter<SheQuAdapter.SheQuViewHol
     }
 
     @Override
-    public void onBindViewHolder(SheQuAdapter.SheQuViewHolder holder, int position) {
-        Post post = mPostList.get(position);
+    public void onBindViewHolder(final SheQuAdapter.SheQuViewHolder holder, int position) {
+        final Post post = mPostList.get(position);
 
         if (post.getAuthor() != null) {
             holder.mPostUser.setText(post.getAuthor().getUserNickName());
@@ -91,6 +100,49 @@ public class SheQuAdapter extends RecyclerView.Adapter<SheQuAdapter.SheQuViewHol
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 imageBrower(i, userImgsArrayList);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, PostDetailActivity.class);
+                intent.putExtra("post", post);
+                mContext.startActivity(intent);
+            }
+        });
+
+        holder.mPostLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mMyUser == null) {
+                    Toast.makeText(mContext, "请先登录!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (!post.getLiked()) {
+                        Post p = new Post();
+                        p.setObjectId(post.getObjectId());
+                        p.increment("likeNum", 1);
+                        p.setLiked(true);
+                        // 把当前用户添加到帖子的likes字段
+                        BmobRelation relation = new BmobRelation();
+                        // 把用户加到多对多关系中
+                        relation.add(mMyUser);
+                        // 多对多关联指向post的likes字段
+                        p.setLikes(relation);
+                        p.update(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    holder.mPostLikeNum.setText(String.valueOf(post.getLikeNum()));
+                                } else {
+                                    Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    } else {
+                        Toast.makeText(mContext, "已经赞过了,亲", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }

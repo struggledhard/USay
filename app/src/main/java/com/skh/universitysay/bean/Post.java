@@ -18,6 +18,7 @@ public class Post extends BmobObject{
     private Integer likeNum;// 点赞数
     private BmobRelation likes;//多对多关系：用于存储喜欢该帖子的所有用户
     private List<String> imageUrlList = new ArrayList<>();   //帖子图片集合
+    private Boolean isLiked = false;
 
     public String getContent() {
         return content;
@@ -65,5 +66,13 @@ public class Post extends BmobObject{
 
     public void setImageUrlList(List<String> imageUrlList) {
         this.imageUrlList = imageUrlList;
+    }
+
+    public Boolean getLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(Boolean liked) {
+        isLiked = liked;
     }
 }
