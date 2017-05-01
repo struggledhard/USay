@@ -123,6 +123,7 @@ public class SheQuAdapter extends RecyclerView.Adapter<SheQuAdapter.SheQuViewHol
                         p.setObjectId(post.getObjectId());
                         p.increment("likeNum", 1);
                         p.setLiked(true);
+                        p.setImageUrlList(post.getImageUrlList());
                         // 把当前用户添加到帖子的likes字段
                         BmobRelation relation = new BmobRelation();
                         // 把用户加到多对多关系中

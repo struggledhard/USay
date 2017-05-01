@@ -1,5 +1,6 @@
 package com.skh.universitysay.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
  *"who": null
  */
 
-public class AndroidItemBean {
+public class AndroidItemBean implements Serializable{
     private String _id;
     private String createdAt;
     private String desc;

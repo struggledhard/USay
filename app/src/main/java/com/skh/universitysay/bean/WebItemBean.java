@@ -1,5 +1,6 @@
 package com.skh.universitysay.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * web实体类
  */
 
-public class WebItemBean {
+public class WebItemBean implements Serializable{
     private String _id;
     private String createdAt;
     private String desc;

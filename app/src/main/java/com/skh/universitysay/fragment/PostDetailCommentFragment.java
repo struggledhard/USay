@@ -190,6 +190,7 @@ public class PostDetailCommentFragment extends Fragment {
                                     manager.hideSoftInputFromWindow(mCommentContent.getWindowToken(), 0);
                                     Post post1 = new Post();
                                     post1.increment("commentNum", 1);
+                                    post1.setImageUrlList(mPost.getImageUrlList());
                                     post1.update(mPost.getObjectId(), new UpdateListener() {
                                         @Override
                                         public void done(BmobException e) {

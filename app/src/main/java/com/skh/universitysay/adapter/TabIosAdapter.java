@@ -46,7 +46,8 @@ public class TabIosAdapter extends RecyclerView.Adapter<TabIosAdapter.TabIosView
     public void onBindViewHolder(TabIosAdapter.TabIosViewHolder holder, int position) {
         IosItemBean itemBean = mIosItemBeen.get(position);
 
-        String title = itemBean.getDesc();
+        final String newid = itemBean.get_id();
+        final String title = itemBean.getDesc();
         final String author = itemBean.getWho();
         String time = itemBean.getPublishedAt();
         final List<String> images = itemBean.getImages();
@@ -83,6 +84,8 @@ public class TabIosAdapter extends RecyclerView.Adapter<TabIosAdapter.TabIosView
                 bundle.putString("author", author);
                 bundle.putString("url", url);
                 bundle.putStringArrayList("images", (ArrayList<String>) images);
+                bundle.putString("new_id", newid);
+                bundle.putString("title", title);
                 intent.putExtra("extra", bundle);
                 mContext.startActivity(intent);
             }

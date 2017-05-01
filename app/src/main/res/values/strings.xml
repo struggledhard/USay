@@ -15,10 +15,11 @@
     <string name="fen_lei_title">分类浏览</string>
 
     <string name="shou_cang">我的收藏</string>
-    <string name="ti_wen">我的提问</string>
+    <string name="ti_wen">我的帖子</string>
     <string name="fan_kui">问题反馈</string>
     <string name="zhu_ye">项目主页</string>
-    <string name="gong_ju">实用工具</string>
+    <string name="you_xi">游戏</string>
+    <string name="gou_wu">购物</string>
     <string name="guan_yu">关于</string>
 
     <string name="login_exit">退出登录</string>
@@ -55,4 +56,24 @@
     <string name="comment_no">暂时没有评论,快去评论吧!</string>
     <string name="likes_no">暂时没有人赞哦!</string>
     <string name="adding">正在加载......</string>
+
+    <string name="feed">请输入遇到的问题或建议......</string>
+    <string name="about_version">USay-v 1.0</string>
+
+    <string name="about_js">介绍与帮助</string>
+    <string name="help_str">
+        一款基于Android传统的MVC技术的个人APP，后端基于Bmob服务器， 包含四个主要页面：\n\n头条页面：数据来源CSDN，Jsoup爬取博客数据；\n分类页面：查看分类资讯；\n社区页面：后端采用Bmob存储数据；\n个人页面：实现一个完整的个人用户系统功能。\n\n代码已开源：https://github.com/struggledhard/USay
+    </string>
+    <string name="about_openlib">使用的开源库</string>
+    <string name="used_libs_str">
+        #开源库#
+        \n\nRxJava：一个在 Java VM 上使用可观测的序列来组成异步的、基于事件的程序的库
+        \n\nRxAndroid：RxJava的辅助库
+        \n\nButterKnife：最好用的View注解框架
+        \n\nGlide：Google推荐的图片加载库，专注于流畅的滚动
+        \n\nGson：Google 提供的用来在 Java 对象和 JSON 数据之间进行映射的 Java 类库
+        \n\nJsoup：java爬虫开源库
+        \n\nOkHttp：网络请求框架
+        \n\nBmob-sdk：Bmob后端云集成sdk
+    </string>
 </resources>

@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_home_gray_24dp"
-            android:tint="#fc0c0c"
+            android:tint="#fc4c0c"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
@@ -37,17 +37,17 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"/>
     <RelativeLayout
-        android:id="@+id/geren_tool"
+        android:id="@+id/geren_game"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:clickable="true"
         android:background="@drawable/select_ge_ren_item">
         <ImageView
-            android:id="@+id/tool"
+            android:id="@+id/game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_build_gray_24dp"
-            android:tint="#2b3074"
+            android:src="@drawable/ic_games_blue_24dp"
+            android:tint="#38ddfd"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
@@ -55,8 +55,40 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/tool"
-            android:text="@string/gong_ju"
+            android:layout_toEndOf="@id/game"
+            android:text="@string/you_xi"
+            android:textSize="@dimen/geren_item"
+            android:textColor="@color/titleText"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/imgNewsItem"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+    <RelativeLayout
+        android:id="@+id/geren_shopping"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:background="@drawable/select_ge_ren_item">
+        <ImageView
+            android:id="@+id/shopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shopping_cart_red_24dp"
+            android:tint="#fc2e26"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/shopping"
+            android:text="@string/gou_wu"
             android:textSize="@dimen/geren_item"
             android:textColor="@color/titleText"
             android:layout_centerVertical="true"

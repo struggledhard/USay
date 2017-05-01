@@ -44,9 +44,10 @@ public class TabAndroidAdapter extends RecyclerView.Adapter<TabAndroidAdapter.Ta
 
     @Override
     public void onBindViewHolder(TabAndroidAdapter.TabAndroidViewHolder holder, int position) {
-        AndroidItemBean itemBean = mAndroidItemBeen.get(position);
+        final AndroidItemBean itemBean = mAndroidItemBeen.get(position);
 
-        String title = itemBean.getDesc();
+        final String newid = itemBean.get_id();
+        final String title = itemBean.getDesc();
         final String author = itemBean.getWho();
         String time = itemBean.getPublishedAt();
         final List<String> images = itemBean.getImages();
@@ -80,9 +81,11 @@ public class TabAndroidAdapter extends RecyclerView.Adapter<TabAndroidAdapter.Ta
                 Intent intent = new Intent();
                 intent.setClass(mContext, WebViewFenLeiActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("new_id", newid);
                 bundle.putString("author", author);
                 bundle.putString("url", url);
                 bundle.putStringArrayList("images", (ArrayList<String>) images);
+                bundle.putString("title", title);
                 intent.putExtra("extra", bundle);
                 mContext.startActivity(intent);
             }

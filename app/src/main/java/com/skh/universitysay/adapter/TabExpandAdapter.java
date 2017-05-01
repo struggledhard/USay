@@ -46,7 +46,8 @@ public class TabExpandAdapter extends RecyclerView.Adapter<TabExpandAdapter.TabE
     public void onBindViewHolder(TabExpandAdapter.TabExpandViewHolder holder, int position) {
         ExpandItemBean itemBean = mExpandItemBeen.get(position);
 
-        String title = itemBean.getDesc();
+        final String newid = itemBean.get_id();
+        final String title = itemBean.getDesc();
         final String author = itemBean.getWho();
         String time = itemBean.getPublishedAt();
         final List<String> images = itemBean.getImages();
@@ -83,6 +84,8 @@ public class TabExpandAdapter extends RecyclerView.Adapter<TabExpandAdapter.TabE
                 bundle.putString("author", author);
                 bundle.putString("url", url);
                 bundle.putStringArrayList("images", (ArrayList<String>) images);
+                bundle.putString("new_id", newid);
+                bundle.putString("title", title);
                 intent.putExtra("extra", bundle);
                 mContext.startActivity(intent);
             }

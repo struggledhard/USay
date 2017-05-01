@@ -25,9 +25,14 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.skh.universitysay.R;
 import com.skh.universitysay.bean.MyUser;
+import com.skh.universitysay.ui.AboutActivity;
+import com.skh.universitysay.ui.CollectionActivity;
+import com.skh.universitysay.ui.FeedBackActivity;
 import com.skh.universitysay.ui.LoginActivity;
 import com.skh.universitysay.ui.MainActivity;
 import com.skh.universitysay.ui.PersonSettingActivity;
+import com.skh.universitysay.ui.QuizActivity;
+import com.skh.universitysay.ui.WebViewGeRenActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +51,10 @@ public class GeRenFragment extends Fragment {
     RelativeLayout mNoLogin;
     @BindView(R.id.geren_home)
     RelativeLayout mGeRenHome;
-    @BindView(R.id.geren_tool)
-    RelativeLayout mGeRenTool;
+    @BindView(R.id.geren_game)
+    RelativeLayout mGeRenGame;
+    @BindView(R.id.geren_shopping)
+    RelativeLayout mGeRenShopping;
     @BindView(R.id.geren_feedback)
     RelativeLayout mGeRenFeedback;
     @BindView(R.id.geren_about)
@@ -79,6 +86,7 @@ public class GeRenFragment extends Fragment {
         mMyUser = BmobUser.getCurrentUser(MyUser.class);
 
         init();
+        RlClickEvent();
         return view;
     }
 
@@ -175,6 +183,114 @@ public class GeRenFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), PersonSettingActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+    }
+
+    /**
+     * 六个RelativeLayout点击事件
+     */
+    private void RlClickEvent() {
+        projectMainEvent();
+        gameEvent();
+        shoppingEvent();
+        feedbackEvent();
+        aboutEvent();
+        myCollentionEvent();
+        myQuizEvent();
+    }
+
+    /**
+     * 项目主页点击事件
+     */
+    private void projectMainEvent() {
+        mGeRenHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), WebViewGeRenActivity.class);
+                intent.putExtra("type", 1);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+    *游戏点击事件
+     * Mob API
+     */
+    private void gameEvent() {
+        mGeRenGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), WebViewGeRenActivity.class);
+                intent.putExtra("type", 2);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * 购物点击事件
+     */
+    private void shoppingEvent() {
+        mGeRenShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), WebViewGeRenActivity.class);
+                intent.putExtra("type", 3);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * 问题反馈点击事件
+     */
+    private void feedbackEvent() {
+        mGeRenFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), FeedBackActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * 关于点击事件
+     */
+    private void aboutEvent() {
+        mGeRenAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * 我的收藏点击事件
+     */
+    private void myCollentionEvent() {
+        mGeRenCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CollectionActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * 我的提问点击事件
+     */
+    private void myQuizEvent() {
+        mGeRenQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), QuizActivity.class);
+                startActivity(intent);
             }
         });
     }

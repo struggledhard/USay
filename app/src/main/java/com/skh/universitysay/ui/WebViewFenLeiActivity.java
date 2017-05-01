@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.skh.universitysay.R;
+import com.skh.universitysay.bean.Favorite;
+import com.skh.universitysay.db.FavoriteDB;
 
 import java.util.List;
 
@@ -49,11 +52,19 @@ public class WebViewFenLeiActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.fenlei_webview)
     WebView mWebView;
+    @BindView(R.id.fenlei_float_btn)
+    FloatingActionButton mActionButton;
 
     private String author;
     private String url;
+    private String newid;
+    private String title;
     private List<String> images;
     private ProgressDialog mProgressDialog;
+    private Favorite mFavorite;
+    private FavoriteDB mFavoriteDB;
+
+    private boolean isFavourite;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,11 +72,23 @@ public class WebViewFenLeiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fenlei_webview);
         ButterKnife.bind(this);
 
+        mFavorite = new Favorite();
+        mFavoriteDB = FavoriteDB.getInstance(this);
+
+//        isCollection();
         initData();
         initProgressDialog();
         initToolBar();
         initWebView();
         initImages();
+        setFavoriteData();
+        setActionButton();
+        isFavourite = mFavoriteDB.isFavorite(mFavorite);
+        if (isFavourite) {
+            mActionButton.setImageResource(R.drawable.ic_favorite_gray_24dp);
+        } else {
+            mActionButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+        }
     }
 
     private void initData() {
@@ -77,8 +100,53 @@ public class WebViewFenLeiActivity extends AppCompatActivity {
                 author = data.getString("author");
                 url = data.getString("url");
                 images = data.getStringArrayList("images");
+                newid = data.getString("new_id");
+                title = data.getString("title");
             }
         }
+    }
+
+    private void setFavoriteData() {
+        mFavorite.setNewId(newid);
+        mFavorite.setAuthor(author);
+        mFavorite.setUrl(url);
+        mFavorite.setTitle(title);
+        if (images != null) {
+            mFavorite.setImage(images.get(0));
+        } else {
+            mFavorite.setImage("http://bmob-cdn-10359.b0.upaiyun.com/2017/05/01/50c24acdbd504ce09bdac971f7ecb1c7.jpg");
+        }
+    }
+
+    /**
+     * 是否已经收藏过
+     */
+//    private void isCollection() {
+//        if (isFavourite) {
+//            mActionButton.setImageResource(R.drawable.ic_favorite_gray_24dp);
+//        } else {
+//            mActionButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+//        }
+//    }
+
+    /**
+     * 悬浮按钮点击事件
+     */
+    private void setActionButton() {
+        mActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isFavourite) {
+                    mFavorite.setClick(true);
+                    mActionButton.setImageResource(R.drawable.ic_favorite_gray_24dp);
+                    mFavoriteDB.saveFavorite(mFavorite);
+                } else {
+                    mFavorite.setClick(false);
+                    mActionButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    mFavoriteDB.deleteFavorite(mFavorite);
+                }
+            }
+        });
     }
 
     private void initImages() {
