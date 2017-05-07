@@ -136,7 +136,8 @@ public class WebViewFenLeiActivity extends AppCompatActivity {
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isFavourite) {
+                boolean isFav = mFavoriteDB.isFavorite(mFavorite);
+                if (!isFav) {
                     mFavorite.setClick(true);
                     mActionButton.setImageResource(R.drawable.ic_favorite_gray_24dp);
                     mFavoriteDB.saveFavorite(mFavorite);
